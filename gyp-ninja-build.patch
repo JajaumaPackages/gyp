@@ -1,0 +1,26 @@
+diff -pruN gyp.orig/pylib/gyp/generator/ninja.py gyp/pylib/gyp/generator/ninja.py
+--- gyp.orig/pylib/gyp/generator/ninja.py	2016-10-17 11:00:37.000000000 +0900
++++ gyp/pylib/gyp/generator/ninja.py	2016-10-17 12:42:10.226872110 +0900
+@@ -2064,11 +2064,11 @@ def GenerateOutputForConfig(target_list,
+     # .c files. This should be handled by mspdbsrv, but rarely errors out with
+     #   c1xx : fatal error C1033: cannot open program database
+     # By making the rules target separate pdb files this might be avoided.
+-    cc_command = ('ninja -t msvc -e $arch ' +
++    cc_command = ('ninja-build -t msvc -e $arch ' +
+                   '-- '
+                   '$cc /nologo /showIncludes /FC '
+                   '@$out.rsp /c $in /Fo$out /Fd$pdbname_c ')
+-    cxx_command = ('ninja -t msvc -e $arch ' +
++    cxx_command = ('ninja-build -t msvc -e $arch ' +
+                    '-- '
+                    '$cxx /nologo /showIncludes /FC '
+                    '@$out.rsp /c $in /Fo$out /Fd$pdbname_cc ')
+@@ -2436,7 +2436,7 @@ def PerformBuild(data, configurations, p
+   options = params['options']
+   for config in configurations:
+     builddir = os.path.join(options.toplevel_dir, 'out', config)
+-    arguments = ['ninja', '-C', builddir]
++    arguments = ['ninja-build', '-C', builddir]
+     print 'Building [%s]: %s' % (config, arguments)
+     subprocess.check_call(arguments)
+ 
